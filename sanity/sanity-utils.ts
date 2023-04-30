@@ -1,12 +1,9 @@
 import { Project } from '@/types/Project'
 import { createClient, groq } from 'next-sanity'
+import clientConfig from './config/client-config'
 
 export async function getProjects(): Promise<Project[]> {
-  const client = createClient({
-    projectId: 'jun6ipwm',
-    dataset: 'production',
-    apiVersion: '2023-04-29',
-  })
+  const client = createClient(clientConfig)
 
   return client.fetch(
     groq`*[_type == "project"]{
@@ -22,11 +19,7 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function getProject(slug: string): Promise<Project> {
-  const client = createClient({
-    projectId: 'jun6ipwm',
-    dataset: 'production',
-    apiVersion: '2023-04-29',
-  })
+  const client = createClient(clientConfig)
 
   return client.fetch(
     groq`*[_type == "project" && slug.current == $slug][0]{
